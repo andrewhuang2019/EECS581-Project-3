@@ -4,6 +4,8 @@ from canvasapi import Canvas
 API_URL = "https://canvas.ku.edu"
 
 class CanvasAPI:
+    # the string passed in needs to be an API token 
+    # which can be obtained from the canvas website 
     def __init__(self, api_string: str):
         self.canvas = Canvas(API_URL, api_string)
 
