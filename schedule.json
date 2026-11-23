@@ -1,12 +1,41 @@
 [
   {
+    "name": "EECS 565",
     "days": [
       "Mon",
       "Wed",
       "Fri"
     ],
-    "start": "10:00",
-    "end": "10:50",
-    "name": "EECS 123"
+    "start": "12:00",
+    "end": "13:00"
+  },
+  {
+    "name": "EECS 690",
+    "days": [
+      "Mon",
+      "Wed",
+      "Fri"
+    ],
+    "start": "13:00",
+    "end": "14:00"
+  },
+  {
+    "name": "EECS 645",
+    "days": [
+      "Mon",
+      "Wed",
+      "Fri"
+    ],
+    "start": "15:00",
+    "end": "16:00"
+  },
+  {
+    "name": "EECS 581",
+    "days": [
+      "Tue",
+      "Thu"
+    ],
+    "start": "16:00",
+    "end": "18:00"
   }
 ]
