@@ -10,6 +10,7 @@ def main():
 
     try:
         api = GoogleAPI()
+        '''
         event = api.create_event(
             "Test event from Python",
             "2026-11-24T10:00:00",
@@ -17,6 +18,14 @@ def main():
             timezone="America/Chicago",
         )
         print("Created:", event.get("htmlLink"))
+        '''
+        weekly_event = api.create_weekly_event(
+            "Test weekly event",
+            "2026-11-24T7:00:00",
+            "2026-11-24T8:00:00",
+            timezone="America/Chicago",
+        )
+        print("Created:", weekly_event.get("htmlLink"))
         api.print_events(api.get_events())
     except Exception as e: 
         print(f"A generic error occurred: {e}")

@@ -30,14 +30,19 @@ class GoogleAPI:
        
         self.service = build("calendar", "v3", credentials=self.creds)
 
-    def create_event(self, summary, start, end, timezone="America/Chicago", description=None):
+    def create_event(self, summary, start, end, timezone="America/Chicago", description=None, recurrence=None):
         body = {
             "summary": summary,
             "description": description,
             "start": {"dateTime": start, "timeZone": timezone},
             "end": {"dateTime": end, "timeZone": timezone},
         }
+        if recurrence:
+            body["recurrence"] = recurrence # add strings as input to create event 
         return self.service.events().insert(calendarId="primary", body=body).execute()
+
+    def create_weekly_event(self, summary, start, end, timezone="America/Chicago", description=None):
+        return self.create_event(summary, start, end, timezone, description, recurrence=["RRULE:FREQ=WEEKLY"])
 
     def get_events(self, max_results=10):
         now = datetime.datetime.now(datetime.timezone.utc).isoformat()
