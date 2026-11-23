@@ -5,6 +5,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from google.auth.exceptions import RefreshError
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
@@ -24,15 +25,25 @@ class GoogleAPI:
        
         self.service = build("calendar", "v3", credentials=self.creds)
 
-    def get_events(self):
+    def create_event(self, summary, start, end, timezone="America/Chicago", description=None):
+        body = {
+            "summary": summary,
+            "description": description,
+            "start": {"dateTime": start, "timeZone": timezone},
+            "end": {"dateTime": end, "timeZone": timezone},
+        }
+        return self.service.events().insert(calendarId="primary", body=body).execute()
+
+    def get_events(self, max_results=10):
         now = datetime.datetime.now(datetime.timezone.utc).isoformat()
-        self.events = self.service.events().list(
-            calendarId="primary", timeMin=now, maxResults=10,
+        result = self.service.events().list(
+            calendarId="primary", timeMin=now, maxResults=max_results,
             singleEvents=True, orderBy="startTime").execute()
-        return self.events
-
-    def print_events(self):
-        for e in self.events.get("items", []):
+        return result.get("items", [])
+   
+    @staticmethod
+    def print_events(events):
+        for e in events:
             start = e["start"].get("dateTime", e["start"].get("date"))
-            print(start, e.get("summary"))
-
+            print(start, e.get("summary", "(no title)"))
+    
